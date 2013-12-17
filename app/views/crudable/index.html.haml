@@ -1,0 +1,33 @@
+%h1
+  - if @select
+    = "Select #{@model.name}"
+  - else
+    = @model.name.pluralize
+
+%table
+  %tr
+    - @model.fields_names.each do |f_name|
+      %th= f_name
+    - @model.collections_names.each do |c_name|
+      %th= c_name
+    %th
+    - unless @select
+      %th
+      %th
+
+  - @records.each do |record|
+    %tr{ id: "#{@model.name.downcase}_record_#{record.id}" }
+      - record.fields.each do |f|
+        %td= record.send(f.name)
+      - record.collections.each do |c|
+        %td= c.to_a.map{ |e| e.to_s }.to_s
+      - if @select
+        %td= link_to select_link_name(@model, @select), path_for_selected(record, @select)
+      - else
+        %td= link_to "Show #{@model.name.downcase}", path_for(record, :show)
+        %td= link_to "Edit #{@model.name.downcase}", path_for(record, :edit)
+        %td= link_to "Destroy #{@model.name.downcase}", path_for(record, :destroy), method: :delete, data: { :confirm => 'Are you sure?' }
+%br
+
+- unless @do_not_show_add_link
+  = link_to add_link_name(@model, controller_name), add_link_path(@model, controller_name, @partype_id)

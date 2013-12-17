@@ -1,0 +1,4 @@
+%b= "#{field.name.to_s.classify}:"
+= selectable_field_input_tag(@record, field, @selected)
+= selectable_field_value(@record, field, @selected)
+= link_to "Select #{field.name}", select_path(@record, field.name, @selected)

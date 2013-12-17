@@ -16,4 +16,10 @@ Preferences:
 
 ________________________
 
-License
+License: WTFPL
+
+
+Description
+========================
+
+Basic crud Rails 4 app with 5 models with the goal to maximize dryness of views, models and controllers. Hence fat ApplicationHelpel, lol.

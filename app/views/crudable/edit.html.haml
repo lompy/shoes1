@@ -1,0 +1,8 @@
+%h1
+  = "Editing #{@record.name}"
+
+= render 'crudable/form'
+
+= link_to 'Show', path_for(@record, :show)
+\|
+= link_to 'Back', model_path(@model)

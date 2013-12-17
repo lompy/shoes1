@@ -17,12 +17,24 @@ module Shoes1
     # don't generate RSpec tests for views and helpers
     config.generators do |g|
       g.test_framework :rspec
-      
-      
-      
-      
+
+
+
+
       g.view_specs false
       g.helper_specs false
+
+
+      console do
+        require "pry"
+        config.console = Pry
+        unless defined? Pry::ExtendCommandBundle
+          Pry::ExtendCommandBundle = Module.new
+        end
+        require "rails/console/app"
+        require "rails/console/helpers"
+        TOPLEVEL_BINDING.eval('self').extend ::Rails::ConsoleMethods
+      end
     end
 
     # Settings in config/environments/* take precedence over those specified here.

@@ -1,0 +1,28 @@
+= form_for @record, form_params(@record, action_name) do |f|
+  - if @record.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@record.errors.count, "error")} prohibited this #{@model.name} from being saved:"
+      %ul
+        - @record.errors.full_messages.each do |msg|
+          %li= msg
+
+  - @record.fields.each do |field|
+    .field
+      - if field.selectable
+        = render 'crudable/selectable_field', f: f, field: field
+      - elsif field.invisible
+        = f.hidden_field "#{field.name}_id"
+      - else
+        = f.label field.label
+        = f.text_field field.name
+  - unless @record.new_record?
+    - @record.collections.each_with_index do |c, index|
+      .field
+        - name = @model.collections_names[index].to_s
+        = "#{name.classify.pluralize}:"
+        = c.map(&:to_s).join(', ')
+        - if @model.collections_editable[index]
+          = link_to "Edit #{name} collection", edit_collection_path(@record, name)
+
+  .actions
+    = f.submit 'Save'

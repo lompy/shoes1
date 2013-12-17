@@ -1,0 +1,14 @@
+%p#notice= notice
+%h1= @model.name
+- @model.fields_names.each do |f|
+  %p
+    %b= "#{f}:"
+    = @record.send(f)
+- @model.collections_names.each_with_index do |c, index|
+  %p
+    %b= "#{c}:"
+    = @record.collections[index].map(&:name)
+
+= link_to 'Edit', path_for(@record, :edit)
+\|
+= link_to 'Back', model_path(@model)
