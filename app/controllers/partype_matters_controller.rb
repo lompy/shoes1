@@ -10,7 +10,7 @@ class PartypeMattersController < ApplicationController
   def new
     @records = Matter.joins(
       'left join matters_partypes on matters_partypes.matter_id = matters.id'
-    ).where('matters_partypes.partype_id <> ? or matters_partypes.partype_id is null', params[:partype_id]).to_a
+    ).where('matters_partypes.partype_id <> ? or matters_partypes.partype_id is null', params[:partype_id]).uniq.to_a
     @select = { partype_id: params[:partype_id], partype_matters: true }
     @do_not_show_add_link = true
     render 'crudable/index'
